@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{msg}}
+        <hr>
+        <div v-if="type === 'A'">
+            A
+          </div>
+          <div v-else-if="type === 'B'">
+            B
+          </div>
+          <div v-else-if="type === 'C'">
+            C
+          </div>
+          <div v-else>
+            Not A/B/C
+          </div>
+          <hr>
+          <div v-if="name=='zhou'">{{name}} </div>
+        
+    </div>
+    
+    
+    
+</body>
+<script>
+   var app = new Vue({
+       el:"#app",
+       data:{
+           msg:"hello vue!!!",
+           isVip:true,
+           type:"A",
+           name:"zhou"
+       }
+   })
+</script>
+
+</html>

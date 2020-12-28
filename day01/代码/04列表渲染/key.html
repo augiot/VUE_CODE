@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="isLogin" :key="login">
+            <label for="username">用户名</label>
+            <input type="text" value="">
+
+            <label for="password">密码</label>
+            <input type="text" value="">
+
+            <input type="button" value="登录">
+        </div>
+
+        <div v-else :key="register">
+            <label for="username">用户名</label>
+            <input type="text" value="">
+
+            <label for="password">密码</label>
+            <input type="text" value="">
+
+            <input type="button" value="注册">
+        </div>
+
+        <div>
+            <input type="button" value="注册/登录" @click="togglePage">
+        </div>
+
+    </div>
+</body>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                isLogin:false
+            },
+            methods:{
+                togglePage:function(){
+                    this.isLogin=!this.isLogin
+                }
+            }
+        })
+    </script>
+</html>
