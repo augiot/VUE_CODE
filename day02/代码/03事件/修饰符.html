@@ -29,7 +29,8 @@
 			<button type="button" @click.once='onceEvent'>只触发一次按钮</button>
 			
 			
-			<button type="button" @click.ctrl.alt.exact="ctrlEvent">按住ctrl事件</button>
+			<button type="button" @click.ctrl.exact="ctrlEvent">按住ctrl事件</button>
+			<button type="button" @click.right.prevent="ctrlEvent">click-right事件 prevent</button>
 			
 		</div>
 		

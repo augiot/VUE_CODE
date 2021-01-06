@@ -11,7 +11,7 @@
 			<h1>单行文本输入框</h1>
 			<input type="text" name="username" v-model.lazy.trim="username" value="" />
 			<h1>多行文本输入框</h1>
-			<textarea rows="" cols="" v-model="username"></textarea>
+			<textarea rows="" cols="" v-model.lazy.trim="username"></textarea>
 			
 			<h1>复选框:选择喜欢的水果</h1>
 			<span v-for="item in fruits">
