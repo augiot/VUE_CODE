@@ -11,7 +11,7 @@
 				<!-- 从父组件传值到子组件 -->
 				
 				<!-- 循环传值组件 -->
-				<school v-for="item,index in schoolList" :key="'abc'+index" :index='index' :school-name="item"></school>
+				<school v-for="item,index in schoolList" @cschool='changeEvent' :key="'abc'+index" :index='index' :school-name="item"></school>
 				
 			</ul>
 			
