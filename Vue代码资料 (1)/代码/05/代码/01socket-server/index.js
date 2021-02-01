@@ -3,7 +3,8 @@ var socketio = require('socket.io')
 var io = socketio(app);
 var fs = require('fs');
 
-app.listen(80);
+app.listen(80,{ origins: '*:*' });
+
 
 //处理WEB服务器正常的请求
 function handler (req, res) {
@@ -19,8 +20,8 @@ function handler (req, res) {
   });
 }
 
-//实时通讯的连接
 
+//实时通讯的连接
 //io.on('connection',事件的回调函数),监听socketio的连接事件，
 io.on('connection', function (socket) {
   //socket.emit(),发送客户端数据
