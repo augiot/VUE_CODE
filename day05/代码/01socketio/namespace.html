@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./js/socket.io.js" type="text/javascript" charset="UTF-8">
+			
+		</script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			let qq =  io.connect("http://localhost:80/qq")
+			//  connect 连接事件监听！
+			qq.on('connect',function(data){
+				console.log("连接事件")
+			})
+			qq.on('news',function(data){
+			    console.log(data)
+			})
+			
+			let wx =  io.connect("http://localhost:80/wx")
+			//  connect 连接事件监听！
+			wx.on('connect',function(data){
+				console.log("连接事件")
+			})
+			wx.on('news',function(data){
+			    console.log(data)
+			})
+		</script>
+	</body>
+</html>

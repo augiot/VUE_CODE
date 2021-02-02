@@ -7,7 +7,7 @@
     <script src="js/socket.io.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-	<h1>小明</h1>
+	<h1>小红</h1>
     <script type="text/javascript">
         console.log(io)
         let con = io.connect("http://localhost:80")
@@ -25,7 +25,7 @@
 			console.log(data)
 		})
 		
-		// 监听新用户加入事件
+		//  监听新用户加入事件
 		con.on('addUser',function(data){
 			console.log(data)
 		})
@@ -36,7 +36,7 @@
 		})
 		
 		function sent(){
-			con.emit('sendUser',{username:"小明", form: "_QY-DRNdSIn2-rXWAAAF", to: "u6RckWDL-OFmI0lJAAAH", content: "到家了吗"}
+			con.emit('sendUser',{username:"小红", form: "_QY-DRNdSIn2-rXWAAAF", to: "u6RckWDL-OFmI0lJAAAH", content: "到家了吗"}
 			)
 		}
     </script>

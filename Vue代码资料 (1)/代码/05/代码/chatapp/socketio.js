@@ -101,13 +101,19 @@ function getSocket(server){
 
     });
 
-
-
     
-
+    let socketio = require('./socketio');
+    let io = socketio.io;
+    io.on('connection', function (socket) {
+        // 此处的socket是当前浏览器某个浏览器与服务器的连接对象
+        socket.emit('news', { hello: 'world' });
+        socket.on('my other event', function (data) {
+        console.log(data);
+        console.log(socket.id)
+        socket.emit('hello',{contetn:'学习前端'})
+        });
+    });
 }
-
-
 
 socketio.getSocket = getSocket;
 

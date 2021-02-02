@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var sqlQuery = require('./module/lcMysql')
 
 var app = express();
 
@@ -22,6 +23,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.get('/api/userlist',async function(req,res){
+  
+  let sqlStr = "select * from user"
+  //  等待获取mysql查询结果
+  let result = await sqlQuery(sqlStr)
+  res.append('Access-Control-Allow-Origin',"*")
+  res.append('Access-Control-Allow-Content-Type',"*")
+  res.json(Array.from(result))
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -37,16 +48,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-setTimeout(() => {
-  let socketio = require('./socketio');
-  const { TIMEOUT } = require('dns');
-  let io = socketio.io;
-  io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-      console.log(data);
-    });
-  });
-}, 1000);
+
+
 
 module.exports = app;
