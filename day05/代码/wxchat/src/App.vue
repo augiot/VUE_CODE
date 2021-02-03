@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <choose-user></choose-user>
+    <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
   </div>
 </template>
 
@@ -16,25 +16,24 @@ export default {
   },
   data(){
     return {
-      userlist:[]
+      userlist:[],
+      
     }
   },
-  beforeMount(){
-      axios.get('http://localhost/api/userlist').then(function(res){
-        alert("hello")
-        console.log(res)
-      })
+  async beforeMount(){
+      // axios.get('http://localhost/api/userlist').then(function(res){
+      //   alert("hello")
+      //   console.log(res)
+      // })
+      let res = await axios.get('http://localhost/api/userlist')
+      this.userlist = res.data
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+ margin: 0;
+ padding: 0;
 }
 </style>
