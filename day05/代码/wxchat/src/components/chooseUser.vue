@@ -11,13 +11,18 @@
 </template>
 
 <script>
+import socket from '../socket';
 export default {
     props:['userlist'],
     methods:{
         chooseEvent:function(user){
             this.$root.me = user;
             localStorage.chatme = JSON.stringify(user)
-            console.log(localStorage)
+            console.log("localStorage",localStorage)
+            console.log(socket)
+            console.log(this.$root.me)
+            socket.emit('login',user)
+        
         }
     },
 }

@@ -1,23 +1,30 @@
 <template>
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
+    <user-list :islogin='islogin'></user-list>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import chooseUser from './components/chooseUser'
+import userList from './components/userlist'
 import axios from 'axios'
+import socket from './socket'
+
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,chooseUser
+    HelloWorld,
+    chooseUser,
+    userList,
+    
   },
   data(){
     return {
       userlist:[],
-      
+      islogin:false,
     }
   },
   async beforeMount(){
@@ -27,7 +34,18 @@ export default {
       // })
       let res = await axios.get('http://localhost/api/userlist')
       this.userlist = res.data
-  }
+      
+  },
+  mounted(){
+    console.log(this.$root)
+    socket.on("login",(data) =>{
+      if(data.state=='ok'){
+        this.islogin = true
+      }
+    })
+  },
+
+
 }
 </script>
 
