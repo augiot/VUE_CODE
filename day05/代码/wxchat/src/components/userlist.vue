@@ -4,7 +4,7 @@
             <div class="headerimg" :class="{online:islogin}">
                 <img v-if="$root.me!=null" :src="$root.me.headerimg" alt="">
             </div>
-            <div>消息</div>
+            <div class="title">消息</div>
             <div class="headerimg">
                 
             </div>
@@ -29,6 +29,10 @@ export default {
 </script>
 
 <style  scoped>
+    .nav .title{
+        font-weight: 900;
+        font-size: 18px;
+    }
     .headerimg{
         filter: grayscale(1);
         height: 50px;

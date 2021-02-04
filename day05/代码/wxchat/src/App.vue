@@ -37,12 +37,26 @@ export default {
       
   },
   mounted(){
-    console.log(this.$root)
+    // console.log(this.$root)
+    // 监听登录成功，设置为true
     socket.on("login",(data) =>{
       if(data.state=='ok'){
         this.islogin = true
       }
     })
+    // 监听断开连接事件
+    socket.on("logout",(data) =>{
+      console.log(data)
+      this.islogin = false
+      // 断开连接
+      socket.disconnect()
+    })
+    // 监听断开连接事件
+    socket.on('disconnect',(data) => {
+      console.log("连接已断开！")
+    })
+
+    //  重连需要刷新页面，执行socked.io connect 的时候会重新连接！
   },
 
 
