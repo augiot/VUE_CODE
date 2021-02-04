@@ -57,6 +57,11 @@ export default {
     })
 
     //  重连需要刷新页面，执行socked.io connect 的时候会重新连接！
+
+    // 监听用户列表
+    socket.on("users",(data)=>{
+      console.log(data)
+    })
   },
 
 
