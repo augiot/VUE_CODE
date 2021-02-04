@@ -45,12 +45,11 @@ function getSocket(server){
 
         // 获取所有用户的信息
         socket.on('users',async function(data){
-            let sqlStr = "select * from user where isonline =?"
-            let result = await sqlQuery(sqlStr,['true'])
-            socket.emit("users",{
-                state:'ok',
-                content:result
-            })
+            let sqlStr = "select * from user"
+            //  等待获取mysql查询结果
+            let result = await sqlQuery(sqlStr)
+
+            socket.emit("users",Array.from(result))
         })
     });
     

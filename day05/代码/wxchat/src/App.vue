@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
-    <user-list v-if="$root.me!=null" :islogin='islogin'></user-list>
+    <user-list v-if="$root.me!=null" :islogin='islogin' :users="users"></user-list>
   </div>
 </template>
 
@@ -19,12 +19,14 @@ export default {
     HelloWorld,
     chooseUser,
     userList,
+
     
   },
   data(){
     return {
       userlist:[],
       islogin:false,
+      users:null,
     }
   },
   async beforeMount(){
@@ -41,7 +43,8 @@ export default {
     // 监听登录成功，设置为true
     socket.on("login",(data) =>{
       if(data.state=='ok'){
-        this.islogin = true
+        this.islogin = true;
+        socket.emit("users")
       }
     })
     // 监听断开连接事件
@@ -60,6 +63,7 @@ export default {
 
     // 监听用户列表
     socket.on("users",(data)=>{
+      this.users = data
       console.log(data)
     })
   },
