@@ -31,8 +31,9 @@ export default {
 <style  scoped>
     .headerimg{
         filter: grayscale(1);
-        height: 60px;
-        width: 60px;
+        height: 50px;
+        width: 50px;
+        margin: 10px;
     }
     .online{
         filter: grayscale(0);
@@ -46,10 +47,8 @@ export default {
         justify-content: space-between;
     }
     .headerimg img{
-        height: 60px;
-        width: 60px;
+        height: 50px;
+        width: 50px;
         border-radius: 50%;
-
-
     }
 </style>

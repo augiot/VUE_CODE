@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
-    <user-list :islogin='islogin'></user-list>
+    <user-list v-if="$root.me!=null" :islogin='islogin'></user-list>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       //   alert("hello")
       //   console.log(res)
       // })
-      let res = await axios.get('http://localhost/api/userlist')
+      let res = await axios.get('http://localhost:3000/api/userlist')
       this.userlist = res.data
       
   },
