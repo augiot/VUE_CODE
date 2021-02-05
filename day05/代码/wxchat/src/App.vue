@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
-    <user-list v-if="$root.me!=null" :islogin='islogin' :users="users"></user-list>
+    <user-list v-if="$root.me!=null" :islogin='islogin' :users="users" :chooseUser="chooseUser"></user-list>
+    <chat-user v-if="ischat" :touser="touser"></chat-user>
+    
   </div>
 </template>
 
@@ -9,8 +11,10 @@
 import HelloWorld from './components/HelloWorld.vue'
 import chooseUser from './components/chooseUser'
 import userList from './components/userlist'
+import chatUser from './components/chatUser'
 import axios from 'axios'
 import socket from './socket'
+
 
 
 export default {
@@ -19,14 +23,15 @@ export default {
     HelloWorld,
     chooseUser,
     userList,
-
-    
+    chatUser,
   },
   data(){
     return {
       userlist:[],
       islogin:false,
       users:null,
+      touser:{},
+      ischat:false,
     }
   },
   async beforeMount(){
@@ -67,6 +72,14 @@ export default {
       console.log(data)
     })
   },
+
+  methods:{
+    chooseUser:function (user) {
+      console.log("点击了用户：",user)
+      this.touser = user;
+      this.ischat = true;
+    }
+  }
 
 
 }

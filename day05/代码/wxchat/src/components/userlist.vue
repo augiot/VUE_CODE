@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="users">
-             <div class="useritem" v-for="(item,index) in users" :key=index>
+             <div @click="chooseUser(item)" class="useritem" v-for="(item,index) in users" :key=index>
                  <div class="left" :class="{online:(item.isonline=='true')}">
                      <img :src="item.headerimg" alt="">
                  </div>
@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-    props:["islogin","users"]
+    props:["islogin","users","chooseUser","touser"]
 }
 </script>
 
