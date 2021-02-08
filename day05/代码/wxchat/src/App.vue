@@ -2,7 +2,7 @@
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
     <user-list v-if="$root.me!=null" :islogin='islogin' :users="users" :chooseUser="chooseUser"></user-list>
-    <chat-user v-if="ischat" :touser="touser"></chat-user>
+    <chat-user v-if="ischat" :touser="touser" :closeChat="closeChat"></chat-user>
     
   </div>
 </template>
@@ -78,7 +78,11 @@ export default {
       console.log("点击了用户：",user)
       this.touser = user;
       this.ischat = true;
+    },
+    closeChat:function(){
+      this.ischat = false;
     }
+
   }
 
 
