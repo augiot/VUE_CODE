@@ -29,6 +29,11 @@ function getSocket(server){
                 state:'ok',
                 content:"登录成功！"
             })
+
+            let sqlStr2 = "select * from user"
+            //  等待获取mysql查询结果
+            let result2 = await sqlQuery(sqlStr2)
+            io.sockets.emit("users",Array.from(result2)) 
         })
 
         // 接收登出事件

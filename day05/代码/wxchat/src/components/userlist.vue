@@ -27,10 +27,16 @@ export default {
     props:["islogin","users","chooseUser","touser"],
     computed:{
         friends:function(){
-            let username = this.$root.me.username;
-            return this.users.filter((item,index)=>{
-                return item.username != username;
-            })
+            console.log(this.$root.me)
+            console.log(this.users)
+            if(this.users !=null){
+                let username = this.$root.me.username;
+                return this.users.filter((item,index)=>{
+                    return item.username != username;
+                })
+            }else{
+                return this.users
+            }
         }
     }
 }
