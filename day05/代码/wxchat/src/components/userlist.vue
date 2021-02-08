@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="users">
-             <div @click="chooseUser(item)" class="useritem" v-for="(item,index) in users" :key=index>
+             <div @click="chooseUser(item)" class="useritem" v-for="(item,index) in friends" :key=index>
                  <div class="left" :class="{online:(item.isonline=='true')}">
                      <img :src="item.headerimg" alt="">
                  </div>
@@ -24,7 +24,15 @@
 </template>
 <script>
 export default {
-    props:["islogin","users","chooseUser","touser"]
+    props:["islogin","users","chooseUser","touser"],
+    computed:{
+        friends:function(){
+            let username = this.$root.me.username;
+            return this.users.filter((item,index)=>{
+                return item.username != username;
+            })
+        }
+    }
 }
 </script>
 
@@ -35,6 +43,22 @@ export default {
     }
     .useritem .left{
         filter: grayscale(1);
+    }
+    .useritem{
+        display: flex;
+        height: 80px;
+        background: #eee;
+        border-bottom: 1px solid #ccc;
+        align-items: center;
+        padding: 0 10px;
+    }
+    .useritem .left img{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+    .useritem .right{
+        padding: 0 10px;
     }
     .headerimg{
         filter: grayscale(1);
