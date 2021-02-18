@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
-    <user-list v-if="$root.me!=null" :islogin='islogin' :users="users" :chooseUser="chooseUser"></user-list>
+    <user-list v-if="$root.me!=null" :islogin='islogin' :users="users" :chooseUser="chooseUser" :unreadlist="unreadlist"></user-list>
     <chat-user v-if="ischat" :touser="touser" :closeChat="closeChat"></chat-user>
     
   </div>
@@ -32,6 +32,7 @@ export default {
       users:null,
       touser:{},
       ischat:false,
+      unreadlist:[]
     }
   },
   async beforeMount(){
@@ -68,8 +69,32 @@ export default {
 
     // 监听用户列表
     socket.on("users",(data)=>{
+      // console.log(data)
       this.users = data
+      
+    })
+
+    // 监听未读消息
+    socket.on("unreadMsg",(data)=>{
+      console.log('unreadMsg......')
       console.log(data)
+      data.forEach((item,index) => {
+        // 设置未读的红点
+        this.unreadlist.push(item.from)
+        // 将聊天的内容分别添加到本地存储
+        let strKey = 'chat-user-' + this.$root.me.username+ '-'+item.from
+        // console.log("====",strKey)
+        // console.log(JSON.stringify(this.chatlist))
+        // 先解析本地存储数据，再添加
+        console.log(strKey)
+        console.log(localStorage[strKey])
+        let newArr = JSON.parse(localStorage[strKey])
+        newArr.push(item)
+        console.log(newArr)
+        localStorage[strKey] = JSON.stringify(newArr);
+
+        
+      });
     })
   },
 
@@ -81,8 +106,17 @@ export default {
     },
     closeChat:function(){
       this.ischat = false;
+    },
+  },
+  computed:{
+    usersObjL:function(){
+      let obj = {}
+      this.users.forEach((item,index)=>{
+        obj[item.username] = item;
+      })
+      console.log(obj)
+      return obj;
     }
-
   }
 
 

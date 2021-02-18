@@ -34,6 +34,11 @@ function getSocket(server){
             //  等待获取mysql查询结果
             let result2 = await sqlQuery(sqlStr2)
             io.sockets.emit("users",Array.from(result2)) 
+
+            // 最新未接受的消息
+            let sqlStr3 = 'select * from chat where isread = ? and `to` = ?'
+            let result3 = await sqlQuery(sqlStr3,['false',data.username])
+            socket.emit('unreadMsg',Array.from(result3))
         })
 
         // 接收登出事件
@@ -58,7 +63,25 @@ function getSocket(server){
         })
 2
         socket.on('sentMsg',async function(msg){
-            console.log(msg)
+            console.log(msg.from.username)
+            
+            // 判断收消息的人是否在线
+            let strSql = 'select * from user where username = ? and isonline = ?';
+            let result = await sqlQuery(strSql,[msg.to.username,"true"]);
+            if(result.length>0){
+                // 如果此人在线，直接发送消息；
+                let toid = result[0].socketid;
+                socket.to(toid).emit(msg)
+                // 将聊天内容存放到数据库
+                let strSql1 = 'insert into chat (`from`,`to`,content,`time`,isread) values(?,?,?,?,?)'
+                let  arr1 = [msg.from.username,msg.to.username,msg.content,msg.time,'true']
+                sqlQuery(strSql1,arr1)
+            }else{
+                // 将聊天内容存放到数据库
+                let strSql1 = 'insert into chat (`from`,`to`,content,`time`,isread) values(?,?,?,?,?)'
+                let  arr1 = [msg.from.username,msg.to.username,msg.content,msg.time,'false']
+                sqlQuery(strSql1,arr1)
+            }
 
         })
     });

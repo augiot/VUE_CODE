@@ -57,8 +57,8 @@ export default {
         },
         saveStorage(){
             let strKey = 'chat-user-' + this.$root.me.username+ '-'+this.touser.username
-            console.log("====",strKey)
-            console.log(JSON.stringify(this.chatlist))
+            // console.log("====",strKey)
+            // console.log(JSON.stringify(this.chatlist))
             localStorage[strKey] = JSON.stringify(this.chatlist)
         },
         getStorage(){

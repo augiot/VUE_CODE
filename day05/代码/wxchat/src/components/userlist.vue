@@ -11,8 +11,9 @@
         </div>
         <div class="users">
              <div @click="chooseUser(item)" class="useritem" v-for="(item,index) in friends" :key=index>
-                 <div class="left" :class="{online:(item.isonline=='true')}">
+                 <div class="left" :class="{online:(item.isonline=='true'),unread:unreadlist.indexOf(item.username) != -1}">
                      <img :src="item.headerimg" alt="">
+                     <div></div>
                  </div>
                  <div class="right">
                      <span class="username">{{item.username}}</span>
@@ -24,7 +25,7 @@
 </template>
 <script>
 export default {
-    props:["islogin","users","chooseUser","touser"],
+    props:["islogin","users","chooseUser","touser","unreadlist"],
     computed:{
         friends:function(){
             console.log(this.$root.me)
@@ -38,11 +39,30 @@ export default {
                 return this.users
             }
         }
+    },
+    mounted(){
+        console.log('-----')
+        console.log(this.unreadlist)
     }
 }
+
 </script>
 
 <style  scoped>
+    .unread{
+        position: relative;
+    }
+    .unread::before{
+        position:absolute;
+        content:'';
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: red;
+        bottom: 5px;
+        right: 5px;
+    }
     .nav .title{
         font-weight: 900;
         font-size: 18px;
