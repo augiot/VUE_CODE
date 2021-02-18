@@ -56,6 +56,11 @@ function getSocket(server){
 
             socket.emit("users",Array.from(result))
         })
+2
+        socket.on('sentMsg',async function(msg){
+            console.log(msg)
+
+        })
     });
     
 

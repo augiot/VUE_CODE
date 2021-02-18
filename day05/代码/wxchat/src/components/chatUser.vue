@@ -139,7 +139,7 @@ export default {
         background: #efefefef;
         
     }
-    .chatuser .header{
+    .chatuser >.header{
         font-size: 18px;
         font-weight: 900;
         background: skyblue;
