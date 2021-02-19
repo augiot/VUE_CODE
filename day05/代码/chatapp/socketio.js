@@ -70,8 +70,9 @@ function getSocket(server){
             let result = await sqlQuery(strSql,[msg.to.username,"true"]);
             if(result.length>0){
                 // 如果此人在线，直接发送消息；
+                console.log("对方在线....")
                 let toid = result[0].socketid;
-                socket.to(toid).emit(msg)
+                socket.to(toid).emit("accept",msg)
                 // 将聊天内容存放到数据库
                 let strSql1 = 'insert into chat (`from`,`to`,content,`time`,isread) values(?,?,?,?,?)'
                 let  arr1 = [msg.from.username,msg.to.username,msg.content,msg.time,'true']
@@ -83,6 +84,11 @@ function getSocket(server){
                 sqlQuery(strSql1,arr1)
             }
 
+        })
+        // 如果收到已读消息，将已读信息改为true
+        socket.on("readMsg",(data) =>{
+            let sqlStr = "update chat set isread = ? where `from` = ? and `to` =?"
+            sqlQuery(sqlStr,['true',data.username,data.self])
         })
     });
     

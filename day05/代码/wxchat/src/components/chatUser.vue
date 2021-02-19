@@ -4,7 +4,7 @@
             <span class="back" @click="closeChat">&lt;</span>
             <div>{{touser.username}}</div>
         </div>
-        <div class="chatlist">
+        <div class="chatlist" ref="chatbox">
             <div class="chatItem" v-for="(item,index) in chatlist" :key=index :class="{self:$root.me.username==item.from.username}">
                 <!-- <div>123456</div> -->
                 <div class="header" >
@@ -31,6 +31,7 @@ export default {
         'touser',
         'chooseUser',
         'closeChat',
+        'newMsg',
     ],
     data(){
         return {
@@ -53,6 +54,7 @@ export default {
             socket.emit('sentMsg',msg)
             // 保存聊天记录到本地
             this.saveStorage()
+            // this.toBottom()  // 此时更新会有一定的延迟，可以放到update生命周期中进行更新，避免延迟带来的计算错误
     
         },
         saveStorage(){
@@ -63,17 +65,43 @@ export default {
         },
         getStorage(){
             let strKey = 'chat-user-' + this.$root.me.username+ '-'+this.touser.username
+            localStorage[strKey] = localStorage[strKey]?localStorage[strKey]:"[]";
             this.chatlist = JSON.parse(localStorage[strKey])
+        },
+        toBottom(){
+            console.log("-----------------ref---------------")
+            console.log(this)
+            let chatbox  = this.$refs.chatbox;
+            console.log(chatbox.scrollTop)
+            chatbox.scrollTop = chatbox.scrollHeight - chatbox.clientHeight;
+            console.log(chatbox.scrollTop)
         }
     },
     beforeMount(){
         this.getStorage()
+        socket.emit("readMsg",{
+            self:this.$root.me.username,
+            username:this.touser.username
+        })
+    },
+    mounted(){
+        this.toBottom();
+    },
+    updated(){
+        this.toBottom();
+    },
+    watch:{
+        newMsg:function(val){
+            this.chatlist.push(val);
+            this.saveStorage()
+        }
     }
 }
 </script>
 <style scoped>
     .chatItem{
         display: flex;
+        
         margin:5px 10px;
         
     }
@@ -98,7 +126,7 @@ export default {
     }
     .chatItem .chatContent{
        
-        margin: 0 20px 0px 0px;
+        margin: 0 20px 0px 14px;
         
     }
     .chatItem .chatContent::before{
@@ -133,6 +161,7 @@ export default {
         height: 100vh;
         display: flex;
         flex-direction: column;
+
         position: fixed;
         top: 0px;
         left: 0px;
@@ -149,6 +178,7 @@ export default {
     }
     .chatlist{
         flex: 1;
+        overflow: scroll;
     }
     .inputcom{
         height: 50px;

@@ -2,7 +2,7 @@
   <div id="app">
     <choose-user v-if="$root.me==null" :userlist=userlist></choose-user>
     <user-list v-if="$root.me!=null" :islogin='islogin' :users="users" :chooseUser="chooseUser" :unreadlist="unreadlist"></user-list>
-    <chat-user v-if="ischat" :touser="touser" :closeChat="closeChat"></chat-user>
+    <chat-user v-if="ischat" :touser="touser" :closeChat="closeChat" :newMsg="newMsg"></chat-user>
     
   </div>
 </template>
@@ -32,7 +32,8 @@ export default {
       users:null,
       touser:{},
       ischat:false,
-      unreadlist:[]
+      unreadlist:[],
+      newMsg:null
     }
   },
   async beforeMount(){
@@ -80,21 +81,42 @@ export default {
       console.log(data)
       data.forEach((item,index) => {
         // 设置未读的红点
-        this.unreadlist.push(item.from)
         // 将聊天的内容分别添加到本地存储
-        let strKey = 'chat-user-' + this.$root.me.username+ '-'+item.from
+
+
+        // 将from/to改成有头像的对象
+        item.from = this.usersObj[item.from]
+        item.to = this.usersObj[item.to]
+        this.unreadlist.push(item.from)
+        
+        let strKey = 'chat-user-' + this.$root.me.username+ '-'+item.from.username
         // console.log("====",strKey)
         // console.log(JSON.stringify(this.chatlist))
         // 先解析本地存储数据，再添加
-        console.log(strKey)
-        console.log(localStorage[strKey])
+        // console.log(strKey)
+        // console.log(localStorage[strKey])
+        localStorage[strKey] = localStorage[strKey]?localStorage[strKey]:"[]";
         let newArr = JSON.parse(localStorage[strKey])
         newArr.push(item)
         console.log(newArr)
         localStorage[strKey] = JSON.stringify(newArr);
+        // console.log("输出用户对象....")
+        // console.log(this.usersObj)
 
         
       });
+    })
+
+    socket.on('accept',(msg)=>{
+      console.log("------接收的数据")
+      console.log(msg.from.username)
+      console.log(this.touser.username)
+      
+      if(this.ischat == true && msg.from.username == this.touser.username){
+         this.newMsg = msg;
+         
+         console.log(msg)
+      }
     })
   },
 
@@ -109,7 +131,7 @@ export default {
     },
   },
   computed:{
-    usersObjL:function(){
+    usersObj:function(){
       let obj = {}
       this.users.forEach((item,index)=>{
         obj[item.username] = item;
