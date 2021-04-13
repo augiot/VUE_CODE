@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,key) in list" :key="key">
+                {{item}}
+            </li>
+        </ul>
+        <button type="button" @click="addList">push</button>
+        <!-- <button v-on:click="addList">push</button> -->
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                msg: "hello vue!!!",
+                isVip: true,
+                type: "A",
+                name: "zhou",
+                list: ["a"]
+            },
+            methods: {
+                // addList: function (event) {
+                //     alert("hh")
+                // },
+                addList(){
+                    this.list.push("b")
+                },
+            },
+            beforeCreate() {
+                console.log("我在创建之前被调用1")
+            },
+            created() {
+                console.log("我在创建之后被调用2")
+            },
+            beforeMount() {
+                console.log("我在挂载之前被调用3")
+            },
+            mounted() {
+                console.log("我在挂载之后被调用4")
+            },
+            beforeUpdate() {
+                console.log("我更新之前被调用5")
+            },
+            updated() {
+                console.log("我更新之后被调用6")
+            },
+            beforeDestroy() {
+                console.log("我更新之后被调用7")
+            },
+            destroyed() {
+                console.log("我更新之后被调用8")
+            },
+            
+        })
+    </script>
+</body>
+
+
+</html>

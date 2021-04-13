@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <father></father>
+    </div>
+
+    <script id="child" type="x-template">
+        <div>
+            <button @click="mythief(hello)">试着用一下</button>
+        </div>
+    </script>
+
+    <script id="father" type="x-template">
+        <div>
+            {{hello}}
+            <children :mythief="mythief"></children>
+        </div>
+    </script>
+
+    <script>
+        var children = {
+            name: "children",
+            // props: {
+            //     hello: String,
+            // },
+            props:["mythief"],
+            template: "#child",
+            data(){
+                return{
+                    hello:"hello world"
+                }
+            }
+        }
+
+        var father = {
+            name: "father",
+            data() {
+                return {
+                    hello: "hello zag"
+                }
+            },
+            template: "#father",
+            components: {
+                children: children
+            },
+            methods:{
+                mythief(gold){
+                    this.hello=gold
+                }
+            }
+            
+        }
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+            },
+            // 局部组件
+            components: {
+                father: father
+            }
+        })
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <father></father>
+    </div>
+
+    <script id="child" type="x-template">
+        <div>
+            <button @click="mythief(hello)">试着用一下</button>
+            <!-- 插槽被使用会被替换，不使用会显示默认 -->
+            <slot name="slot1"><h1>我是插槽1</h1></slot>
+            <slot name="slot2"><h1>我是插槽2</h1></slot>
+            <slot name="slot3" v-for="item in items" :text="item.text" :myid="item.id">我是作用域插槽3</slot>
+        </div>
+    </script>
+
+    <script id="father" type="x-template">
+        <div>
+            {{hello}}
+            <children :mythief="mythief">
+                <h2 slot="slot1">你好，我是想加入的html</h2>
+                <h2 slot="slot1">你好，我是想加入的html2</h2>
+                <!-- 作用域插槽的使用 -->
+                <template slot="slot3" scope="scope">
+                    <div style="color:red">{{scope.myid}}</div>
+                    <div style="color:blue">{{scope.text}}</div>
+                </template>
+            </children>
+        </div>
+    </script>
+
+    <script>
+        var children = {
+            name: "children",
+            // props: {
+            //     hello: String,
+            // },
+            props: ["mythief"],
+            template: "#child",
+            data() {
+                return {
+                    hello: "hello world",
+                    items: [{
+                        text: "zag",
+                        id: 1
+                    }, {
+                        text: "ZAG",
+                        id: 2
+                    }]
+                }
+            }
+        }
+
+        var father = {
+            name: "father",
+            data() {
+                return {
+                    hello: "hello zag"
+                }
+            },
+            template: "#father",
+            components: {
+                children: children
+            },
+            methods: {
+                mythief(gold) {
+                    this.hello = gold
+                }
+            }
+
+        }
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+            },
+            // 局部组件
+            components: {
+                father: father
+            }
+        })
+    </script>
+</body>
+
+
+</html>

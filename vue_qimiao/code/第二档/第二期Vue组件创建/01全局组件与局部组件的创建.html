@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div-zag></div-zag>
+        <cool-zag></cool-zag>
+        
+        
+    </div>
+
+    <script>
+        // 全局组件
+        // Vue.component("divZag",{
+        //     name:"divZag",
+        //     data(){
+        //         return{
+        //             hello:"hello world!"
+        //         }
+        //     },
+        //     template:"<h1>{{hello}}</h1>"
+        // })
+
+        var app =new Vue({
+            el:"#app",
+            data:{
+            },
+            // 局部组件
+            components:{
+                coolZag:{
+                    name:"coolZag",
+                    data(){
+                        return {
+                            coolhello:"cool hello world!"
+                        }
+                    },
+                    template:"<h2>{{coolhello}}</h2>"
+                }
+            }
+        })
+    </script>
+</body>
+
+
+</html>

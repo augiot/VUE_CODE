@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <ui>
+                <li v-for="item in items">{{item.name}}</li>
+            </ui>
+            <button @click="change">change</button>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            name:"app",
+            el: "#app",
+            data:{
+                items:[{name:"xiaowang"},{name:"小李"}]
+            },
+            methods:{
+                change(){
+                    // this.items[0] = {name:"周"}
+                    // Vue.set(this.items,0,{name:"我被强制改变了"})
+                    this.$set(this.items,0,{name:"我被强制改变了"})
+                    console.log(this.items)
+                }
+            }
+        })
+    </script>
+</body>
+
+
+</html>
