@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <ul>
+                <li  v-for="item in list">{{item}}</li>
+            </ul>
+            <button @click="addList">push</button>
+            {{lastName + firstName}}
+            {{fullname}}
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                firstName: "zag",
+                lastName: "zhou",
+                list:["a"]
+            },
+            methods: {
+                // addList: function (event) {
+                //     alert("hh")
+                // },
+                addList() {
+                    this.list.push("b")
+                },
+            },
+            computed: {
+                // 简略写法
+                // fullname(){
+                //     var shuai = ""
+                //     if(this.firstName == "zag1"){
+                //         shuai = "帅"
+                //     }
+                //     return this.lastName+ shuai + this.firstName
+                // }
+                // 完整写法
+                fullname: {
+                    set: function (newvalue) {
+                        this.lastName="ZZZ"
+                        this.firstName="AAAA"
+                        console.log("+++",newvalue)
+
+                    },
+                    get: function () {
+                        var shuai = ""
+                        if (this.firstName == "zag1") {
+                            shuai = "帅"
+                        }
+                        return this.lastName + shuai + this.firstName
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+
+</html>

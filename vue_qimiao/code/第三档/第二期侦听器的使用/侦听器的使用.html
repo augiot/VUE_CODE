@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="../../js/vue.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <button @click="testWatcher()">侦听器探测器</button>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                watcher: "123",
+                watcher2:{
+                    a:123
+                }
+            },
+            methods: {
+                testWatcher() {
+                    alert("111")
+                    this.watcher = "456"
+                    this.watcher2.a="333"
+                },
+            },
+            watch: {
+                // 监听单个方法
+                // watcher:
+                //     function (newvalue,oldvalue) {
+                //         console.log(newvalue,oldvalue)
+                //     }
+                // 监听多个方法
+                
+                
+                watcher:[
+                    function(){console.log("第一个方法被触发了！")},
+                    function(){console.log("第二个方法被触发了！")},
+                ],
+                // 对复杂类型数据的监听方式，有两种！
+                watcher2:{
+                    handler:function(newvalue,oldvalue){
+                        alert("我侦听到了")
+                        console.log("我侦听到了")
+                    },
+                    deep:true,
+                },
+                'watcher2.a':function(newvalue,oldvalue){
+                    console.log(newvalue,oldvalue)
+                }
+            }
+        })
+    </script>
+</body>
+
+
+</html>
