@@ -3,7 +3,6 @@ import requests
 from lxml import etree
 import copy
 
-
 # //div[@class="td-lm-list"]//a/@href  每一页中href
 # //div[@class="td-lm-list"]//a/text()  每一页的title
 
@@ -75,23 +74,18 @@ class XSpider:
             # 1.start_url
             # 2.发送请求，获取响应
             html_str = self.parse_url(next_url)
-            content_list, next_url = self.get_content_list(html_str)
-
-            # 测试
-            # detail_url="http://www.51garlic.com/jg/show-htm-itemid-90076.html"
-            # detail_url="http://www.51garlic.com/jg/show-htm-itemid-90075.html"
-            # item={}
-            # content_list=[]
-            # self.get_detail_list(detail_url,item,content_list)
-
             # 3.提取数据，提取下一页url地址
-            # 3.1 提取列表页的url地址和标题
-            # 3.2 请求列表页的url地址，获取详情页的第一页
-            # 3.3 详情页的第一页的图片，提取下一页的地址
-            # 3.4 请求详情页下一页的地址，进入循环3.2-34
-            # 4.保存
+            content_list, next_url = self.get_content_list(html_str)
+            # 4.保存数据 
             # 5.请求下一页的url地址，进行2-5循环
             pass
+
+        # 单独测试详情页
+        # detail_url="http://www.51garlic.com/jg/show-htm-itemid-90076.html"
+        # detail_url="http://www.51garlic.com/jg/show-htm-itemid-90075.html"
+        # item={}
+        # content_list=[]
+        # self.get_detail_list(detail_url,item,content_list)
 
 
 if __name__ == '__main__':
